@@ -1,14 +1,15 @@
 # Import the module
 import python_rust_showcase
 
-# Instantiatea array
-x = python_rust_showcase.PArray(25000)
+# Instantiatea array.
+x = python_rust_showcase.PArray(10000000)
 x.push(1.3)
 x.push(3.2)
 x.push(1)
 y = x.retrieve()
 print(f"Push demo: {y}")
 
+#WILL CREATE 1000000 VALUES DO NOT BE AFRAID
 x.clear()
 x.randomize()
 y = x.retrieve()

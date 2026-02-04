@@ -1,6 +1,7 @@
 use pyo3::prelude::*;
 use rayon::prelude::*;
 use rand::prelude::*;
+use rand::distr::Uniform;
 
 // Define the class at top level so PyO3 can generate its bindings
 #[pyclass]
@@ -27,8 +28,14 @@ impl PArray {
     fn randomize(&mut self) {
         self.data.clear();
         let mut rng = rand::rng();
-        
-        for i in 0..self.size{self.data.push(rng.random::<f64>())}
+
+        let r_dist = Uniform::new(0., 10.).unwrap();
+
+        let rand_vec: Vec<f64> = (0..self.size)
+            .into_par_iter()
+            .map_init(rand::rng, |rng, _| rng.sample(r_dist))
+            .collect();
+        self.data = rand_vec;
 
     }
     fn retrieve(&self) -> Vec<f64> {self.data.clone()}
